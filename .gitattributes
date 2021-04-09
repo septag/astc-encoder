@@ -11,6 +11,7 @@ Jenkinsfile text
 # VS solutions always use Windows line endings
 *.sln text eol=crlf
 *.vcxproj text eol=crlf
+*.vcxproj.filters text eol=crlf
 
 # Bash scripts always use *nux line endings
 *.sh text eol=lf

@@ -370,25 +370,33 @@ static void compute_endpoints_and_ideal_weights_3_comp(
 
 	for (int i = 0; i < partition_count; i++)
 	{
-		vfloat4 color_scale;
+		float s1 = 0, s2 = 0, s3 = 0;
 		assert(omitted_component < 4);
 		switch (omitted_component)
 		{
 		case 0:
-			color_scale = pms[i].color_scale.swz<1, 2, 3>();
+			s1 = pms[i].color_scale.lane<1>();
+			s2 = pms[i].color_scale.lane<2>();
+			s3 = pms[i].color_scale.lane<3>();
 			break;
 		case 1:
-			color_scale = pms[i].color_scale.swz<0, 2, 3>();
+			s1 = pms[i].color_scale.lane<0>();
+			s2 = pms[i].color_scale.lane<2>();
+			s3 = pms[i].color_scale.lane<3>();
 			break;
 		case 2:
-			color_scale = pms[i].color_scale.swz<0, 1, 3>();
+			s1 = pms[i].color_scale.lane<0>();
+			s2 = pms[i].color_scale.lane<1>();
+			s3 = pms[i].color_scale.lane<3>();
 			break;
 		default:
-			color_scale = pms[i].color_scale.swz<0, 1, 2>();
+			s1 = pms[i].color_scale.lane<0>();
+			s2 = pms[i].color_scale.lane<1>();
+			s3 = pms[i].color_scale.lane<2>();
 			break;
 		}
 
-		pms[i].color_scale = normalize(color_scale) * 1.73205080f;
+		pms[i].color_scale = normalize(vfloat4(s1, s2, s3, 0.0f)) * 1.73205080f;
 	}
 
 	float lowparam[4] { 1e10f, 1e10f, 1e10f, 1e10f };

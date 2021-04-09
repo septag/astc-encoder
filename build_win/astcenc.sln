@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "astcenc-neon-static", "astcenc-neon-static.vcxproj", "{77AC94AB-BA39-38A6-8249-932F4F4C5F0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Release|ARM64 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77AC94AB-BA39-38A6-8249-932F4F4C5F0E}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{77AC94AB-BA39-38A6-8249-932F4F4C5F0E}.Debug|ARM64.Build.0 = Debug|ARM64
+		{77AC94AB-BA39-38A6-8249-932F4F4C5F0E}.Release|ARM64.ActiveCfg = Release|ARM64
+		{77AC94AB-BA39-38A6-8249-932F4F4C5F0E}.Release|ARM64.Build.0 = Release|ARM64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A54E3464-F6FE-30DF-BE07-C56A28792C3E}
+	EndGlobalSection
+EndGlobal
