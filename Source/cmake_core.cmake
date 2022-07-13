@@ -25,9 +25,7 @@ project(${ASTC_TARGET})
 
 set(GNU_LIKE "GNU,Clang,AppleClang")
 set(CLANG_LIKE "Clang,AppleClang")
-
-add_library(${ASTC_TARGET}-static
-    STATIC
+set(SOURCE_FILES 
         astcenc_averages_and_directions.cpp
         astcenc_block_sizes.cpp
         astcenc_color_quantize.cpp
@@ -52,13 +50,19 @@ add_library(${ASTC_TARGET}-static
         astcenc_weight_align.cpp
         astcenc_weight_quant_xfer_tables.cpp)
 
-target_include_directories(${ASTC_TARGET}-static
+if (${DYNAMIC_LIB})
+    add_library(${ASTC_TARGET} SHARED ${SOURCE_FILES})
+else()
+    add_library(${ASTC_TARGET} STATIC ${SOURCE_FILES})
+endif()
+
+target_include_directories(${ASTC_TARGET}
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:.>)
 
 if(${CLI})
-    add_executable(${ASTC_TARGET}
+    add_executable(${ASTC_TARGET}-cmd
         astcenccli_error_metrics.cpp
         astcenccli_image.cpp
         astcenccli_image_external.cpp
@@ -66,10 +70,10 @@ if(${CLI})
         astcenccli_platform_dependents.cpp
         astcenccli_toplevel.cpp
         astcenccli_toplevel_help.cpp)
-
-    target_link_libraries(${ASTC_TARGET}
+    
+    target_link_libraries(${ASTC_TARGET}-cmd
         PRIVATE
-            ${ASTC_TARGET}-static)
+            ${ASTC_TARGET})
 endif()
 
 macro(astcenc_set_properties NAME)
@@ -91,6 +95,12 @@ macro(astcenc_set_properties NAME)
             set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /d2ssa-cfg-sink-")
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /d2ssa-cfg-sink-")
         endif()
+    endif()
+
+    if (${DYNAMIC_LIB})
+        target_compile_definitions(${NAME} 
+            PRIVATE 
+                ASTCENC_DYNAMIC_LIBRARY ASTCENC_EXPORT)
     endif()
 
     if(${DECOMPRESSOR})
@@ -307,9 +317,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
             COMPILE_FLAGS ${EXTERNAL_CXX_FLAGS})
 endif()
 
-astcenc_set_properties(${ASTC_TARGET}-static)
+astcenc_set_properties(${ASTC_TARGET})
 
-    target_compile_options(${ASTC_TARGET}-static
+    target_compile_options(${ASTC_TARGET}
         PRIVATE
             $<$<CXX_COMPILER_ID:MSVC>:/W4>)
 

@@ -164,7 +164,11 @@
 
 #if defined(ASTCENC_DYNAMIC_LIBRARY)
 	#if defined(_MSC_VER)
-		#define ASTCENC_PUBLIC extern "C" __declspec(dllexport)
+		#if defined(ASTCENC_EXPORT)
+			#define ASTCENC_PUBLIC extern "C" __declspec(dllexport)
+		#else
+			#define ASTCENC_PUBLIC extern "C" __declspec(dllimport)
+		#endif
 	#else
 		#define ASTCENC_PUBLIC extern "C" __attribute__ ((visibility ("default")))
 	#endif

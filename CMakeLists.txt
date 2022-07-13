@@ -33,7 +33,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 include(CTest)
 
-option(ISA_AVX2 "Enable builds for AVX2 SIMD")
+option(ISA_AVX2 "Enable builds for AVX2 SIMD" ON)
 option(ISA_SSE41 "Enable builds for SSE4.1 SIMD")
 option(ISA_SSE2 "Enable builds for SSE2 SIMD")
 option(ISA_NEON "Enable builds for NEON SIMD")
@@ -44,7 +44,8 @@ option(DIAGNOSTICS "Enable builds for diagnostic trace")
 option(ASAN "Enable builds width address sanitizer")
 option(UNITTEST "Enable builds for unit tests")
 option(NO_INVARIANCE "Enable builds without invariance")
-option(CLI "Enable build of CLI" ON)
+option(CLI "Enable build of CLI")
+option(DYNAMIC_LIB "Enable building of dynamic library" ON)
 
 set(UNIVERSAL_BUILD OFF)
 set(MACOS_BUILD OFF)
@@ -207,6 +208,7 @@ printopt("No invariance  " ${NO_INVARIANCE})
 printopt("Diagnostics    " ${DIAGNOSTICS})
 printopt("ASAN           " ${ASAN})
 printopt("Unit tests     " ${UNITTEST})
+printopt("Dynamic Lib    " ${DYNAMIC_LIB})
 
 # Subcomponents
 add_subdirectory(Source)
