@@ -8,6 +8,17 @@ if "%1" == "" (
   goto end
 )
 
+if "%1" == "stub" (
+  shift
+  goto stub_run
+)
+
+copy /Y build.bat build-stub.bat
+call build-stub.bat stub %*
+exit
+
+:stub_run
+echo %1
 git checkout tags/%1
 if "%errorlevel%" neq "0" (
   goto end
@@ -88,4 +99,5 @@ popd
 popd
 
 :end
+git checkout -
 popd
